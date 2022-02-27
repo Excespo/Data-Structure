@@ -1,0 +1,1 @@
+g++ demoPG.cpp PermutationGroup.cpp -o _demoPG
