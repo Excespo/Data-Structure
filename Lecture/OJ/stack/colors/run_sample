@@ -1,0 +1,1 @@
+g++ -o draft.out draft.cpp && cat sample.txt| ./draft.out

@@ -1,0 +1,1 @@
+<yellow>aa a<blue>bb<red>abc</red>b</blue>ccc</yellow>dddd<red> abc</red>dd<blue><yellow>aa </yellow></blue>

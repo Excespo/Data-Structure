@@ -1,0 +1,21 @@
+4
+VISIT http://www.baidu.com/
+VISIT http://tieba.baidu.com/
+BACK
+BACK
+BACK
+FORWARD
+VISIT http://www.google.com/
+BACK
+BACK
+FORWARD
+FORWARD
+FORWARD
+QUIT
+VISIT http://www.sina.com/
+BACK
+QUIT
+FORWARD
+QUIT
+BACK
+QUIT

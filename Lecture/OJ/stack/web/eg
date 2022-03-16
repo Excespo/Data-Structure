@@ -1,0 +1,1 @@
+g++ -o eguog.out eguog.cpp && cat sample.txt | ./eguog.out

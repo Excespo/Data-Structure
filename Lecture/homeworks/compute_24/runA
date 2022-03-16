@@ -1,1 +1,1 @@
-g++ 
+g++ -c Base24.cpp Compute24.cpp && g++ -o a.out Base24.o Compute24.o && ./a.out 1

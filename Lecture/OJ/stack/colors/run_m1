@@ -1,0 +1,1 @@
+g++ -o m1.out m1.cpp && cat sample1.txt | ./m1.out

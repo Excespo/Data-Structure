@@ -1,5 +1,4 @@
 #include <iostream>
-#include <algorithm>
 #include "BaseOperations.h"
 using namespace std;
 
@@ -25,5 +24,6 @@ public:
 	int Read();
 	int Display();
 };
+
 
 #endif

@@ -1,0 +1,1 @@
+g++ -c Student.cpp TestMemLeak.cpp && g++ -o TestMemLeak.out Student.o TestMemLeak.o && ./TestMemLeak.out
