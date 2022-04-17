@@ -1,0 +1,7 @@
+One of the simplest and effective methods of designing IIR digital filters with prescribed
+magnitude response specifications is the bilinear transformation method.
+Instead of designing the digital filter directly, the method maps the digital filter into
+an equivalent analog filter, which can be designed by one of the well-developed analog
+filter design methods, such as Butterworth, Chebyshev, or elliptic filter designs. The
+designed analog filter is then mapped back into the desired digital filter. The procedure
+is illustrated in Fig. 11.1.1.

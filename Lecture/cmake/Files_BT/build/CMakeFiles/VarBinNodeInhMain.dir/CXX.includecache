@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/VarBinNodeInh.h
+stdlib.h
+-
+iostream
+-
+
+/home/yijie/Data-Structure/Lecture/cmake/Files_BT/src/VarBinNodeInhMain.cpp
+VarBinNodeInh.h
+/home/yijie/Data-Structure/Lecture/cmake/Files_BT/src/VarBinNodeInh.h
+

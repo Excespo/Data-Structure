@@ -1,0 +1,1 @@
+g++ -o draft.o draft.cc && cat in1.txt | ./draft.o

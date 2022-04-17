@@ -1,0 +1,1 @@
+g++ -o main.o main.cc && cat in3.txt | ./main.o

@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
+#include <unistd.h>
 
 using std::vector;
+using intptr = int*;
 
 typedef vector < vector <double> >  darray;
 
@@ -48,16 +50,24 @@ int main(int argc, char **argv){
     child.method1(5);
     child.method2(std::move(5));
 
-    std::string s1 = "";
+    // open draft.txt and write
+    std::fstream outfile;
+    outfile.open("1.txt", std::ios_base::in);
+    if (outfile.is_open()) std::cout << 1;
+    for (int i = 0; i < 10; i++) outfile << '2';
+    // pause(); // system("pause");
+    outfile << '4';
+    
+    char state[] = "Eu23";
+    long val = 560031841;
+    std::cout.setf(std::ios_base::boolalpha);
+    (std::cout.write(state,2) << " 1" ).write( (char*) &val, sizeof(long)) << true << std::endl;
+    outfile.close();
 
-    std::cout << s1 << std::endl;
-    std::stack<int> stk({1});
-    stk.push(2);
-    stk.pop();
-    int elem = stk.top();
-    std::cout << elem << std::endl;
-    // char s2 = s1[0];
-    // std::cout << s1.c_str() << s2 << (s2=='n') << (s2=="n") << std::endl;
+    // intptr
+    int arr_0[] = {1,2,3,4};
+    intptr arr_1 = arr_0;
+    std::cout << arr_1[0] << std::endl;
 
     /* Draft code ends */
     tt.countE();

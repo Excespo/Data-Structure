@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/BinNode.h
+
+../include/MixBinNode.h
+stdlib.h
+-
+iostream
+-
+BinNode.h
+../include/BinNode.h
+
+/home/yijie/Data-Structure/Lecture/cmake/Files_BT/src/MixBinNodeMain.cpp
+MixBinNode.h
+/home/yijie/Data-Structure/Lecture/cmake/Files_BT/src/MixBinNode.h
+

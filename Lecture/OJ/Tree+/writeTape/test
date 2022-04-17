@@ -1,0 +1,1 @@
+g++ -o data_gen.o data_gen.cc && ./data_gen.o && cat in.txt && g++ -o draft.o draft.cc && cat in.txt |./ref.o && cat in.txt | ./draft.o && cat out.txt && cat out_ref.txt
