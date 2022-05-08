@@ -1,0 +1,36 @@
+#CompareDemo.cpp
+#Compare.h
+#demoBootstrap
+#demoBubbleSort.cpp
+#demoHeapSort.cpp
+#demoInsertionSort.cpp
+#demoQuickSort.cpp
+#demoRadixSort.cpp
+#demoSelectionSort.cpp
+#demoShellSort.cpp
+#InternalSortingPreview.h
+#MaxHeap.h
+
+echo 'Abstract comparison demo==>';
+g++ CompareDemo.cpp -o _CompareDemo;
+./_CompareDemo;
+echo 'Insertion sort demo==>';
+g++ demoInsertionSort.cpp -o _demoInsertionSort;
+./_demoInsertionSort;
+echo 'Bubble sort demo==>';
+g++ demoBubbleSort.cpp -o _demoBubbleSort;
+./_demoBubbleSort;
+echo 'Selection sort demo==>';
+g++ demoSelectionSort.cpp -o _demoSelectionSort;
+./_demoSelectionSort;
+echo 'Shell sort demo==>';
+g++ demoShellSort.cpp -o _demoShellSort;
+./_demoShellSort;
+echo 'Quick sort demo==>';
+g++ demoQuickSort.cpp -o _demoQuickSort;
+./_demoQuickSort;
+echo 'Radix sort demo==>';
+g++ demoRadixSort.cpp -o _demoRadixSort;
+./_demoRadixSort;
+
+rm _*

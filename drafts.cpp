@@ -37,6 +37,11 @@ class TestTool
         }
 };
 
+// lvalue reference
+int test_ref1(int & num) { return num; }
+int test_ref2(int const & num) { return num; }
+int test_ref3(int && num) { return num; }
+
 int main(int argc, char **argv){
 
     TestTool tt;
@@ -68,6 +73,15 @@ int main(int argc, char **argv){
     int arr_0[] = {1,2,3,4};
     intptr arr_1 = arr_0;
     std::cout << arr_1[0] << std::endl;
+
+    // l/r value reference
+    int _num = 1;
+    // std::cout << test_ref1(1) << std::endl; // invalid
+    std::cout << test_ref2(1) << std::endl; // valid
+    std::cout << test_ref3(1) << std::endl; // valid
+    std::cout << test_ref1(_num) << std::endl; // valid
+    std::cout << test_ref2(_num) << std::endl; // valid
+    // std::cout << test_ref3(_num) << std::endl; // invalid
 
     /* Draft code ends */
     tt.countE();
