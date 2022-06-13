@@ -1,0 +1,104 @@
+# Makefile
+.PHONY: build clean format test grade submit-project1 docker-build docker-run
+
+build:
+        @mkdir -p build && cd build && cmake .. && make -j
+
+clean:
+        @rm -rf build
+
+format:
+        @find . \( -name "*.h" -o -iname "*.cc" \) |xargs clang-format -i -style=file
+
+test:
+        @cd build && ctest --out-on-failure
+
+grade:
+        @bash scripts/grade.sh
+
+submit-project1:
+        @git archive --format tar.gz --output "project1_submission.tar.gz" project1
+
+docker-build:
+        @docker build . -t naivedb
+
+docker-run:
+        @docker run -it --rm -v `pwd`:`pwd` -w `pwd` naivedb(base)
+
+# /
+cmake_minimum_required(VERSION 3.18)
+project(NaiveDB)
+enable_testing()
+
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING
+        "Default build type: Debug" FORCE)
+endif()
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Use IWYU
+# set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE include-what-you-use)
+add_compile_options(-pedantic -Wall -Werror)
+
+# Add fmt
+find_package(fmt REQUIRED)
+
+include_directories(${PROJECT_SOURCE_DIR}/src)
+
+add_subdirectory(${PROJECT_SOURCE_DIR}/src)
+add_subdirectory(${PROJECT_SOURCE_DIR}/tests)
+
+# /tests
+macro(add_test_exec exec_name)
+    add_executable(${exec_name} ${exec_name}.cc)
+    target_link_libraries(${exec_name} naivedb)
+endmacro(add_test_exec)
+
+include_directories(${PROJECT_SOURCE_DIR}/tests)
+
+add_subdirectory(io)
+add_subdirectory(buffer)
+add_subdirectory(storage)
+add_subdirectory(query)
+add_subdirectory(catalog)
+add_subdirectory(common)
+
+# /tests/buffer
+add_test_exec(lru_replacer_test)
+add_test(NAME lru_replacer_test COMMAND lru_replacer_test)
+
+add_test_exec(buffer_manager_test)
+add_test(NAME buffer_manager_test COMMAND buffer_manager_test)
+
+
+# Macros
+#pragma once
+
+#include <cstdio>
+#include <cstdlib>
+
+#define TEST_ASSERT(cond)                                                                                              \
+    do {                                                                                                               \
+        if (!(cond)) {                                                                                                 \
+            printf("%s:%d: %s: Assertion `%s` failed.\n", __FILE__, __LINE__, __PRETTY_FUNCTION__, #cond);             \
+            exit(EXIT_FAILURE);                                                                                        \
+        }                                                                                                              \
+    } while (0)
+
+#define TEST_ASSERT_EQ(a, b)                                                                                           \
+    do {                                                                                                               \
+        if ((a) != (b)) {                                                                                              \
+            printf("%s:%d: %s: Assertion `%s == %s` failed.\n", __FILE__, __LINE__, __PRETTY_FUNCTION__, #a, #b);      \
+            exit(EXIT_FAILURE);                                                                                        \
+        }                                                                                                              \
+    } while (0)
+
+#define TEST_ASSERT_NE(a, b)                                                                                           \
+    do {                                                                                                               \
+        if ((a) == (b)) {                                                                                              \
+            printf("%s:%d: %s: Assertion `%s != %s` failed.\n", __FILE__, __LINE__, __PRETTY_FUNCTION__, #a, #b);      \
+            exit(EXIT_FAILURE);                                                                                        \
+        }                                                                                                              \
+    } while (0)

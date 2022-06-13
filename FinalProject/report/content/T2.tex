@@ -1,0 +1,246 @@
+\section{T2}
+
+\subsection{Data Preparation}
+Before analysing the given map, we will first give interfaces for the map.
+
+\subsubsection*{generation of map in \textbf{AM}}
+
+We prepare an interface \mintinline{c++}{AM genAM();} to generate an \verb|AM| data structure from the given map. As our \verb|AM| constructor requires a vector of vertices and a vector of edges with distance(/weight), we simply construct the two vectors by pushing all vertices and weighted edges. Finally we can get the correct AM corresponding to the map given in the handout.
+
+\subsubsection*{a. Implement the generic \textbf{GetEdgesAM}}
+
+The function prototype should be like \mintinline{c++}{std::vector<weighted_edge_type> getEdgesAM(AM am);} in our case. To extract the edges from AM, we just need to undergo the following phases:
+\begin{itemize}
+    \item traverse the half matrix, and get the position where the item isn't \verb|-INF|
+    \item convert from position to city names
+    \item construct the edge with the names and item value being the distance(/weight)
+    \item push the edge to the array to be returned.
+\end{itemize}
+
+And to better demonstrate our edges structure, we overload the \verb|operator<<| with a friend function 
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{c++}
+    /* include/types.h */
+    inline std::ostream &operator<<(std::ostream &cout, 
+                                    weighted_edge_type w_edge) {
+        weight_type w = w_edge.second;
+        vertice_type v1 = w_edge.first.first, v2 = w_edge.first.second;
+        std::cout << "[" << v1 << " <--" << w << "--> " << v2 << "]";
+        return std::cout;
+    }  // need inline to avoid multiple definition
+\end{minted}
+
+Our \verb|GetEdgeAM| function take the given map AM as argument and give the following result:
+\begin{verbatim}
+============= TEST FOR getEdgeAM BEGINS =============
+Got Weighted Edges in this AM:
+[WL <--130--> LZ]
+[WL <--120--> LS]
+[LZ <--111--> LS]
+[LZ <--84--> XA]
+[LZ <--85--> CD]
+[LS <--110--> CD]
+[XA <--87--> CD]
+[XA <--90--> BJ]
+[XA <--94--> WH]
+[CD <--86--> KM]
+[CD <--99--> WH]
+[CD <--102--> GZ]
+[KM <--101--> GZ]
+[BJ <--100--> WH]
+[BJ <--88--> SY]
+[BJ <--9--> TJ]
+[WH <--98--> GZ]
+[WH <--97--> TJ]
+[WH <--96--> SH]
+[WH <--95--> FZ]
+[GZ <--91--> FZ]
+[SY <--89--> TJ]
+[TJ <--93--> SH]
+[SH <--92--> FZ]
+============== TEST FOR getEdgeAM ENDS ==============
+\end{verbatim}
+
+That's the correct edges in the given map.
+
+\subsection{Sort of edges}
+
+As the prerequisite of the algorithms in the later tasks, we need to sort the edges in the ascending order.
+
+\subsubsection*{b. Implement the generic \textbf{MinHeapSort}}
+
+The min heap structure maintain a partial ordered sequence (that the parent element is always smaller than its children), with the first element in the structure being always the smallest element. To output an ascending sequence, we transform the original sequence to a min heap structure, and every time we pop the first element and re-order the heap, until the heap is empty.
+
+First we implement the \verb|MinHeap| class. We maintain the private variables: a vector of keys of elements, and a vector of values of element. In our case, key refer to the edge structure, and value refer to the distance of the edge. 
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{c++}
+    /* include/minHeap.h */
+    template <typename keyT, typename valT>
+    class minHeap {
+      private:
+        std::vector<keyT> _keys;
+        std::vector<valT> _vals;
+        int _size;
+    
+      protected:
+        int siftUp(int r);
+        int siftDown(int size, int r);
+        void heapify(int size);
+    
+      public:
+        minHeap() { _size = 0; }
+        minHeap(std::vector<keyT> ks, std::vector<valT> vs);
+        ~minHeap() {}
+        int size() { return _size; }
+        bool empty() { return _size == 0; }
+        keyT get_min_key() { return _keys[0]; }
+        valT get_min_val() { return _vals[0]; }
+        keyT get_key_at(int r) { return _keys[r]; }
+        valT get_val_at(int r) { return _vals[r]; }
+        valT get_val_at(keyT k);
+        bool set_val_with(keyT k, valT v);
+        void push_back(keyT k, valT v);
+        void print_keys();
+        void print_vals();
+        void print_all();
+        void delMin();
+        void sort();
+    };
+\end{minted}
+
+The most important methods of the class is the three protected methods: \verb|siftUp|, \verb|siftDown|, \verb|heapify|:
+\begin{itemize}
+    \item \verb|siftUp|, check if the current node satisfy the heap's partial order between itself and its sibling and its parent. If not satified, modified their positions.
+    \item \verb|siftDown|, check if the current node satisfy the heap's partial order between itself and its children. If not satified, modified their positions.
+    \item \verb|heapify|, from an arbitrary array (in fact a vector), do \verb|siftDown| for all the elements except the lowest level ones. It will give a heapified array.
+\end{itemize}
+All the three methods modify both the key's array and the value's array.
+
+To fit with the handout's requirement, we encapsulate the functions concerning \verb|minHeap| to one function: \mintinline{c++}{void minHeapSort(std::vector<weighted_edge_type> &w_edges);} As the detailed procedures is too long, here we just post an extract and the sorted sequence. More details please run the executable under the root working directory with command: \verb|build/test_edges|, and see the test for \verb|MinHeapSort|. Extract of the executing procedure and the sorted sequence is:
+
+\begin{verbatim}
+============ TEST FOR minHeapSort BEGINS ============
+Got Sorted Weighted Edges
+...
+...
+...
+Current heap of size: 3
+Print current heap's keys:
+[LZ <--111--> LS] [WL <--120--> LS] [WL <--130--> LZ] 
+Current heap of size: 2
+Print current heap's keys:
+[WL <--120--> LS] [WL <--130--> LZ] 
+Current heap of size: 1
+Print current heap's keys:
+[WL <--130--> LZ] 
+Current heap of size: 0
+Print current heap's keys:
+
+[BJ <--9--> TJ]
+[LZ <--84--> XA]
+[LZ <--85--> CD]
+[CD <--86--> KM]
+[XA <--87--> CD]
+[BJ <--88--> SY]
+[SY <--89--> TJ]
+[XA <--90--> BJ]
+[GZ <--91--> FZ]
+[SH <--92--> FZ]
+[TJ <--93--> SH]
+[XA <--94--> WH]
+[WH <--95--> FZ]
+[WH <--96--> SH]
+[WH <--97--> TJ]
+[WH <--98--> GZ]
+[CD <--99--> WH]
+[BJ <--100--> WH]
+[KM <--101--> GZ]
+[CD <--102--> GZ]
+[LS <--110--> CD]
+[LZ <--111--> LS]
+[WL <--120--> LS]
+[WL <--130--> LZ]
+============= TEST FOR minHeapSort ENDS =============
+\end{verbatim}
+
+\subsubsection*{c. Implement the generic \textbf{MergeSort}}
+
+A typical merge sort is made up of two phases:
+\begin{itemize}
+    \item sort phase: The array is recurrently bisected until the array has only less than two elements (it's trivial then, and is ordered, so we get many small segments of ordered sequences).
+    \item merge phase: We recurrently merge all segments to a larger one. For two segments to be merges, we pop the smaller one of the smallest elements of the two segments, until segments are all empty. The merge goes until all segments have been merged to the original size, and as a result of merge phase, the result is necessarily ordered.
+\end{itemize}
+
+Our design for merge sort include three functions:
+\begin{itemize}
+    \item \mintinline{c++}{void merge_then_sort(std::vector<weighted_edge_type> &w_edges,} \newline  \mintinline{c++}{                     int lo, int hi);}\newline This function is responsible for bisecting the interval $\left[\text{lo}, \text{hi}\right)$ into two subintervals $\left[\text{lo}, \text{mid}\right)$ and $\left[\text{mid}, \text{hi}\right)$, recursively calling the function to continue bisecting the subintervals until the subinterval is trivial (in this case it directly return), and then merging to larger segements.
+    \item \mintinline{c++}{void merge(std::vector<weighted_edge_type> &w_edges, int lo, int hi);} This function deal with the merge phase with the idea mentioned above, merge the subintervals in $\left[\text{lo}, \text{hi}\right)$ and make this interval ordered.
+    \item \mintinline{c++}{void MergeSort(std::vector<weighted_edge_type> &w_edges);} An encapuslated version of merge sort fitted in the handout's context.
+\end{itemize}
+
+As for results, to save space, more details please run the executable under the root working directory with command: \verb|build/test_edges|, and see the test for \verb|MergeSort|. The Extract of the executing procedure and the sorted sequence is:
+\begin{verbatim}
+============= TEST FOR MergeSort BEGINS =============
+Got Sorted Weighted Edges
+...
+...
+...
+After merge:
+[LZ <--84--> XA] [LZ <--85--> CD] [CD <--86--> KM] [XA <--87--> CD] 
+[XA <--90--> BJ] [XA <--94--> WH] [CD <--99--> WH] [CD <--102--> GZ] 
+[LS <--110--> CD] [LZ <--111--> LS] [WL <--120--> LS] 
+[WL <--130--> LZ] [BJ <--9--> TJ] [BJ <--88--> SY] [SY <--89--> TJ] 
+[GZ <--91--> FZ] [SH <--92--> FZ] [TJ <--93--> SH] [WH <--95--> FZ] 
+[WH <--96--> SH] [WH <--97--> TJ] [WH <--98--> GZ] [BJ <--100--> WH] 
+[KM <--101--> GZ] 
+After merge:
+[BJ <--9--> TJ] [LZ <--84--> XA] [LZ <--85--> CD] [CD <--86--> KM] 
+[XA <--87--> CD] [BJ <--88--> SY] [SY <--89--> TJ] [XA <--90--> BJ] 
+[GZ <--91--> FZ] [SH <--92--> FZ] [TJ <--93--> SH] [XA <--94--> WH] 
+[WH <--95--> FZ] [WH <--96--> SH] [WH <--97--> TJ] [WH <--98--> GZ] 
+[CD <--99--> WH] [BJ <--100--> WH] [KM <--101--> GZ] 
+[CD <--102--> GZ] [LS <--110--> CD] [LZ <--111--> LS] [WL <--120--> LS] 
+[WL <--130--> LZ] 
+Results:
+[BJ <--9--> TJ]
+[LZ <--84--> XA]
+[LZ <--85--> CD]
+[CD <--86--> KM]
+[XA <--87--> CD]
+[BJ <--88--> SY]
+[SY <--89--> TJ]
+[XA <--90--> BJ]
+[GZ <--91--> FZ]
+[SH <--92--> FZ]
+[TJ <--93--> SH]
+[XA <--94--> WH]
+[WH <--95--> FZ]
+[WH <--96--> SH]
+[WH <--97--> TJ]
+[WH <--98--> GZ]
+[CD <--99--> WH]
+[BJ <--100--> WH]
+[KM <--101--> GZ]
+[CD <--102--> GZ]
+[LS <--110--> CD]
+[LZ <--111--> LS]
+[WL <--120--> LS]
+[WL <--130--> LZ]
+============== TEST FOR MergeSort ENDS ==============
+\end{verbatim}
+
+\subsection{QAs}
+
+We will answer the questions concerning the two functions given above.
+
+\subsubsection*{d. Time Complexity}
+The time complexity of \verb|MinHeapSort| and the \verb|MergeSort| are both $O(nlogn)$
+
+\subsubsection*{e. Explanation of time complexity}
+\textbf{Time complexity of MinHeapSort is O(nlogn)} As for a heap structure, we construct the heap with \verb|siftDown| from the bottom. Suppose there are $N$ elements, as a heap is stored in array but is seen as a hierarchy structure (like tree), we can say the height of heap is $L = log(N)$. As for an element of height $H$, it will undergo a \verb|siftDown| phase, it's up to $H$, and there are $2^{L-H-1}$ elements of height $H$. So the complexity is evaluated by $\sum_{1}^{L} H \cdot 2^{L-H-1} \approx 2^{L} = N$ (Construction begins from height $1$, ends to height $L$). So the construction of heap is of time complexity $O(n)$, and it's done inplace.
+
+To output the ordered sequence in a min heap, we use \verb|delMin|, which is an element-wise swap and \verb|siftDown|, it is therefore of complexity $O(logn)$
+
+The complete \verb|MinHeapSort| requires a head-construction and \verb|delMin| for $n$ steps, the complexity is $O(n) + n \times O(logn) = O(nlogn)$. And the sort require $O(n)$ extra space to store the temporal min heap structure.
+
+\textbf{Time complexity of MergeSort is O(nlogn)} As for \verb|MergeSort|, Suppose we the time complexity of an array with size $n$ is $T(n)$, then consider merge phase, we merge two already sorted array to one, this phase require time of $C(n) = n$, so we have the recurrent formula $T(n) = T(\frac{n}{2}) + T(\frac{n}{2}) + C(n)$, we have $T(n) = nlogn = O(nlogn)$. The extra space is $O(n)$.
+
+That's all for \textit{task 2}.

@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/test_adjacency.dir/tests/test_adjacency.cc.o CMakeFiles/test_adjacency.dir/src/adjacency.cc.o -o test_adjacency 

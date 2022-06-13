@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{connected\PYGZus{}graph\PYGZus{}type}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{connected\PYGZus{}components}\PYG{p}{(}
+\end{Verbatim}

@@ -1,0 +1,79 @@
+\section{T4}
+
+Realize the minimum distance with Dijkstra's algorithm. The algorithm holds the idea that in a graph where there is no cycle of negative weights, we can recurrently determine the minimum distance from the already-determined nodes.
+
+\subsection{Code Designs}
+\subsubsection*{a and b. Implement the generic \textbf{DijkstraAM}}
+
+The only function is \mintinline{c++}{preceding_vertice_map_type dijkstraAM(}\newline
+\mintinline{c++}{                  AM am, vertice_type src, vertice_type dst);}\newline
+We want to in the meanwhile calculate the minimal distance, and be able to construct the route planned. So the return type of this function is: \newline
+\mintinline{c++}{using preceding_vertice_map_type = std::map<vertice_type, vertice_type>;}\newline
+which is a map from the current node to its previous one. With this structure we can easily establish the chosen route.
+
+\subsection{QAs}
+
+\subsubsection*{c. Completion of pseudo code of Dijkstra's algorithm}
+
+\begin{algorithm*}  
+\caption{Dijkstra's Algorithm}  
+% \label{alg:A}  
+\begin{algorithmic}  
+\STATE {Push the start vertex $S$ into Queue}   
+\WHILE{Queue is not empty and the destination vertex $D$ has not been popped}
+\STATE Pop the vertex with \boxed{\textsc{\textbf{minimum}}} distance from Queue
+\FOR{vertex in the non-traversed neighbors of the popped vertex}
+\IF{vertex is not in Queue} \STATE push vertex (with its current distance to $S$) into Queue \ENDIF
+\IF{vertex already exists in Queue} \STATE update the distance of vertex in Queue if necessary \ENDIF
+\ENDFOR
+\ENDWHILE
+\end{algorithmic}  
+\end{algorithm*}
+
+The required fill in the blank is boxed and emphasized in the pseudo code in next page.
+
+\subsubsection*{d. demonstrate \textbf{DijkstraAM}}
+To save space, more details please run the executable under the root working directory with
+command: \verb|build/test_dijkstra|. The Extract of the executing procedure and the sorted sequence is: 
+\begin{verbatim}
+Updating around: SY
+turn: 1
+Current heap of size: 14
+Print current heap's keys:
+SY BJ TJ SY GZ FZ SH WL XA LS WH LZ KM CD 
+Print current heap's values:
+0 88 89 2139062143 2139062143 2139062143 2139062143 2139062143 2139062143 
+2139062143 2139062143 2139062143 2139062143 2139062143 
+Poping: SY : 0
+Updating around: BJ
+turn: 2
+...
+...
+...
+Updating around: LS
+turn: 12
+Current heap of size: 3
+Print current heap's keys:
+LS WL SY 
+Print current heap's values:
+373 392 2139062143 
+Poping: LS : 373
+Minimum distance from src: SY, dst: LS >> 373
+BJ : SY
+CD : XA
+FZ : WH
+GZ : WH
+KM : CD
+LS : LZ
+LZ : XA
+SH : TJ
+TJ : SY
+WH : TJ
+WL : LZ
+XA : BJ
+LS <- LZ <- XA <- BJ <- SY
+\end{verbatim}
+
+The minimal distance from \verb|ST| to \verb|LS| is \boxed{$373$}
+
+That's all for \textit{task 4}.

@@ -83,6 +83,36 @@ int main(int argc, char **argv){
     std::cout << test_ref2(_num) << std::endl; // valid
     // std::cout << test_ref3(_num) << std::endl; // invalid
 
+    //map
+    std::map<std::string, int> s2idx;
+    s2idx["Shanghai"] = 1;
+    s2idx["Xneng"] = 0;
+    std::map<std::string, int>::iterator iter;
+    for (iter = s2idx.begin(); iter != s2idx.end(); ++iter) {
+        std::cout << iter->first << " : " << iter->second << "\n";
+    }
+
+    //pair
+    std::pair<int, int> p1(1, 3);
+    std::cout << p1.first << " , " << p1.second << "\n";
+    std::pair<std::pair<int, int>, int> p2 = {p1, 2};
+    std::cout << p2.first.first << " , " << p2.first.second << " , " << p2.second << "\n";
+
+    //
+    using ivec1 = std::vector<int>;
+    using ivec2 = std::vector<ivec1>;
+    ivec2 a;
+    if (a.empty())
+        a.push_back(ivec1({1, 2}));
+    // std::cout << a.size() << " " << a[0].size();
+    for (int i = 0; i < a.size(); i++) {
+        for (int j = 0; j < a[i].size(); j++) {
+            std::cout << a[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+    std::cout << "ivec test\n";
+
     /* Draft code ends */
     tt.countE();
     tt();

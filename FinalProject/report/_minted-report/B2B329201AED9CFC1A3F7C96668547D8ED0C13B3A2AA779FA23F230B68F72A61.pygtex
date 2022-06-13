@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{+w}{  }\PYG{c+cm}{/* include/types.h */}
+\PYG{+w}{  }\PYG{k+kr}{inline}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{ostream}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{k}{operator}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{p}{(}\PYG{n}{std}\PYG{o}{::}\PYG{n}{ostream}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{n}{cout}\PYG{p}{,}
+\PYG{+w}{                                  }\PYG{n}{weighted\PYGZus{}edge\PYGZus{}type}\PYG{+w}{ }\PYG{n}{w\PYGZus{}edge}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{n}{weight\PYGZus{}type}\PYG{+w}{ }\PYG{n}{w}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{w\PYGZus{}edge}\PYG{p}{.}\PYG{n}{second}\PYG{p}{;}
+\PYG{+w}{      }\PYG{n}{vertice\PYGZus{}type}\PYG{+w}{ }\PYG{n}{v1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{w\PYGZus{}edge}\PYG{p}{.}\PYG{n}{first}\PYG{p}{.}\PYG{n}{first}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{v2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{w\PYGZus{}edge}\PYG{p}{.}\PYG{n}{first}\PYG{p}{.}\PYG{n}{second}\PYG{p}{;}
+\PYG{+w}{      }\PYG{n}{std}\PYG{o}{::}\PYG{n}{cout}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}[\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{v1}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{} \PYGZlt{}\PYGZhy{}\PYGZhy{}\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{w}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}\PYGZhy{}\PYGZhy{}\PYGZgt{} \PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{n}{v2}\PYG{+w}{ }\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}]\PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{      }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{cout}\PYG{p}{;}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}\PYG{+w}{  }\PYG{c+c1}{// need inline to avoid multiple definition}
+\end{Verbatim}

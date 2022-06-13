@@ -1,0 +1,119 @@
+\section{T1}
+
+In this task, we will design AM(adjacency matrix), AL(adjacency list) and printAM, printAL
+
+\subsection{Adjacency Matrix}
+Adjacency matrix (abbreviate to AM) is a matrix where the columns and rows are the vertices of the graph, and the element of the matrix represents the adjacency condition. If we take row $i$ that represents city $A$ and column $j$ that represents city $B$ as example, the AM is written as \verb|adjMat|.
+\begin{itemize}
+    \item The item $\text{adjMat}_{i, j}$ =  - \verb|INF|, if the city $A$ and $B$ is not adjacent. As there is no direct route between $A$ and $B$, we set the distance to negative infinity to represent the inaccessibility.
+    \item The item $\text{adjMat}_{i, j} = d \geq 0$, in this case the cities are adjacent and the distance of the direct route is $d$. (Notice that the distance is always not negative)
+\end{itemize}
+We also notice that if $i=j$, $A$, $B$ is the same city, then $d = 0$. Also we have $\text{adjMat}_{i, j} = \text{adjMat}_{j, i}$, as the route is always bidirectional. We conclude that the AM is always a symmetric matrix with non-negative items.
+
+In this situation, we first define the basic types for ou data, including vertices and edges.
+
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{c++}
+    /* include/types.h */
+    using vertice_type = std::string;
+    using edge_type = std::pair<vertice_type, vertice_type>;
+    using weighted_edge_type = std::pair<edge_type, int>;
+\end{minted}
+
+\subsubsection*{a. implement the \textbf{AM} data structure}
+And we introduce the public interface of the class \verb|AdjacentMatrix|. The class maintain all the vertices in a \mintinline{c++}{std::vector<vertice_type>} container. And a bidirectional map from the vertices' names to their indices in the rows and columns of the matrix, with type \mintinline{c++}{vertice_to_idx_map_type} \newline \mintinline{c++}{ = std::map<vertice_type, int>} and type \mintinline{c++}{idx_to_vertice_map_type} \newline \mintinline{c++}{ = std::map<int, vertice_type>}. They'are quite useful when we want to convert between city names and the AM structure.
+
+\begin{minted}[mathescape, linenos, numbersep=5pt, gobble=2, frame=lines, framesep=2mm]{c++}
+    /* include/adjacency.h */
+    AdjacencyMatrix(std::vector<vertice_type> vs, 
+                    std::vector<weighted_edge_type> wes);
+    ~AdjacencyMatrix(){};
+    std::vector<vertice_type> get_vertices() { return _vertices; }
+    vertice_to_idx_map_type get_v2idx() { return _v2idx; }
+    idx_to_vertice_map_type get_idx2v() { return _idx2v; }
+    adj_matrix_type get_adjMat() { return _adjMat; }
+    int get_v_size(void) { return _v_size; }
+    int get_e_size(void) { return _e_size; }
+    void print();
+\end{minted}
+
+You can see that the only part to implement is the constructor of the class and the \verb|print| function. We will now explain how to constrcut with explicit arguments of all vertices and all weighted edegs(that's to say with the distances between cities). We experience three phases:
+
+\begin{itemize}
+    \item With all vertices, map them to their position in the vector, and use the same position in the construction phases of the matrix
+    \item Initialization phase of the matrix, the size of matrix being the number of vertices, and pad the diagonal line to $0$ (always 0 whatever the map looks like)
+    \item Traverse all the weighted edges to fill the matrix. Vacant positions in the matrix we pad them with \verb|-INF| as they represent the inaccessibility.
+\end{itemize}
+
+By doing so, we successfully maintain the private variables of a vector of vertices, two maps between vertices and indices, and the matrix itself, being a two-dimensional vector.
+
+\subsubsection*{b. Implement the generic \textbf{PrintAM} function}
+As for printing the adjacent matrix, we just need to leave space for the rows and columns, and print the matrix by traversing the vector container in order, which is quite naive and simple. The result is shown below:
+
+\begin{verbatim}
+================ TEST FOR AM BEGINS ================
+Our map has 13 vertices and 24 edges.
+Print Adjacency Matrix:
+       WL   LZ   LS   XA   CD   KM   BJ   WH   GZ   SY   TJ   SH   FZ
+  WL    0  130  120    N    N    N    N    N    N    N    N    N    N
+  LZ  130    0  111   84   85    N    N    N    N    N    N    N    N
+  LS  120  111    0    N  110    N    N    N    N    N    N    N    N
+  XA    N   84    N    0   87    N   90   94    N    N    N    N    N
+  CD    N   85  110   87    0   86    N   99  102    N    N    N    N
+  KM    N    N    N    N   86    0    N    N  101    N    N    N    N
+  BJ    N    N    N   90    N    N    0  100    N   88    9    N    N
+  WH    N    N    N   94   99    N  100    0   98    N   97   96   95
+  GZ    N    N    N    N  102  101    N   98    0    N    N    N   91
+  SY    N    N    N    N    N    N   88    N    N    0   89    N    N
+  TJ    N    N    N    N    N    N    9   97    N   89    0   93    N
+  SH    N    N    N    N    N    N    N   96    N    N   93    0   92
+  FZ    N    N    N    N    N    N    N   95   91    N    N   92    0
+================= TEST FOR AM ENDS =================
+\end{verbatim}
+
+Where \verb|N| is a symbol that just represents the value \verb|-INF|.
+
+\subsection{Adjacency List}
+\subsubsection*{c. Implement the \textbf{AL} data structure}
+When cities are uniformly distributed geographically, it is likely that the number of edges is not much large than that of vertices (Imagine the extreme case where all vertices are connected to any other verice, and if the number of vertices is $n$, then number of edges can reach $n*(n-1)$). Therefore the AM will be sparse. 
+
+To solve this problem, we can use a bucket to store all the neighbors of a vertice, and we store the buckets in another dimension. This is the idea of Adjacency list (abbreviate to AL) We use a vector of type \verb|vertice_type| to store one bucket, and the list node of type \verb|std::pair<vertice_type,|\newline \verb|std::vector<vertice_type>>| to store both the head vertice and its neighbor bucket. A vector of type being such node type helps us store the whole AL. 
+
+\begin{verbatim}
+    AdjacencyMatrix(std::vector<vertice_type> vs, 
+                    std::vector<weighted_edge_type> wes);
+    ~AdjacencyMatrix(){};
+    std::vector<vertice_type> get_vertices() { return _vertices; }
+    vertice_to_idx_map_type get_v2idx() { return _v2idx; }
+    idx_to_vertice_map_type get_idx2v() { return _idx2v; }
+    adj_matrix_type get_adjMat() { return _adjMat; }
+    int get_v_size(void) { return _v_size; }
+    int get_e_size(void) { return _e_size; }
+    void print();
+\end{verbatim}
+
+The constructor of the AL is quite similar to that of AL.
+
+\subsubsection*{d. Implement the generic \textbf{PrintAL} function}
+We print the AL in the form given in the handout and the result is:
+
+\begin{verbatim}
+================ TEST FOR AL BEGINS ================
+Our map has 13 vertices and 24 edges.
+Print Adjacency List:
+WL -> LZ -> LS -> N
+LZ -> WL -> LS -> XA -> CD -> N
+LS -> WL -> LZ -> CD -> N
+XA -> LZ -> CD -> BJ -> WH -> N
+CD -> LZ -> LS -> XA -> KM -> WH -> GZ -> N
+KM -> CD -> GZ -> N
+BJ -> XA -> WH -> SY -> TJ -> N
+WH -> XA -> CD -> BJ -> GZ -> TJ -> SH -> FZ -> N
+GZ -> CD -> KM -> WH -> FZ -> N
+SY -> BJ -> TJ -> N
+TJ -> BJ -> WH -> SY -> SH -> N
+SH -> WH -> TJ -> FZ -> N
+FZ -> WH -> GZ -> SH -> N
+================= TEST FOR AL ENDS =================
+\end{verbatim}
+
+That's all for \textit{task 1}.

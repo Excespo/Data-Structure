@@ -1,0 +1,34 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{+w}{  }\PYG{c+cm}{/* include/minHeap.h */}
+\PYG{+w}{  }\PYG{k}{template}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{k}{typename}\PYG{+w}{ }\PYG{n+nc}{keyT}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{typename}\PYG{+w}{ }\PYG{n+nc}{valT}\PYG{o}{\PYGZgt{}}
+\PYG{+w}{  }\PYG{k}{class}\PYG{+w}{ }\PYG{n+nc}{minHeap}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{private}\PYG{o}{:}
+\PYG{+w}{      }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{keyT}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{\PYGZus{}keys}\PYG{p}{;}
+\PYG{+w}{      }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{valT}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{\PYGZus{}vals}\PYG{p}{;}
+\PYG{+w}{      }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{\PYGZus{}size}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{k}{protected}\PYG{o}{:}
+\PYG{+w}{      }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{siftUp}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r}\PYG{p}{);}
+\PYG{+w}{      }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{siftDown}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{size}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r}\PYG{p}{);}
+\PYG{+w}{      }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{heapify}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{size}\PYG{p}{);}
+
+\PYG{+w}{    }\PYG{k}{public}\PYG{o}{:}
+\PYG{+w}{      }\PYG{n}{minHeap}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n}{\PYGZus{}size}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{      }\PYG{n}{minHeap}\PYG{p}{(}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{keyT}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{ks}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{valT}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{vs}\PYG{p}{);}
+\PYG{+w}{      }\PYG{o}{\PYGZti{}}\PYG{n}{minHeap}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}\PYGZcb{}}
+\PYG{+w}{      }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{size}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{\PYGZus{}size}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{      }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n}{empty}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{\PYGZus{}size}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{      }\PYG{n}{keyT}\PYG{+w}{ }\PYG{n}{get\PYGZus{}min\PYGZus{}key}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{\PYGZus{}keys}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{];}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{      }\PYG{n}{valT}\PYG{+w}{ }\PYG{n}{get\PYGZus{}min\PYGZus{}val}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{\PYGZus{}vals}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{];}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{      }\PYG{n}{keyT}\PYG{+w}{ }\PYG{n}{get\PYGZus{}key\PYGZus{}at}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{\PYGZus{}keys}\PYG{p}{[}\PYG{n}{r}\PYG{p}{];}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{      }\PYG{n}{valT}\PYG{+w}{ }\PYG{n}{get\PYGZus{}val\PYGZus{}at}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{\PYGZus{}vals}\PYG{p}{[}\PYG{n}{r}\PYG{p}{];}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{      }\PYG{n}{valT}\PYG{+w}{ }\PYG{n}{get\PYGZus{}val\PYGZus{}at}\PYG{p}{(}\PYG{n}{keyT}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{);}
+\PYG{+w}{      }\PYG{k+kt}{bool}\PYG{+w}{ }\PYG{n+nf}{set\PYGZus{}val\PYGZus{}with}\PYG{p}{(}\PYG{n}{keyT}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{valT}\PYG{+w}{ }\PYG{n}{v}\PYG{p}{);}
+\PYG{+w}{      }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{push\PYGZus{}back}\PYG{p}{(}\PYG{n}{keyT}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{valT}\PYG{+w}{ }\PYG{n}{v}\PYG{p}{);}
+\PYG{+w}{      }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{print\PYGZus{}keys}\PYG{p}{();}
+\PYG{+w}{      }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{print\PYGZus{}vals}\PYG{p}{();}
+\PYG{+w}{      }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{print\PYGZus{}all}\PYG{p}{();}
+\PYG{+w}{      }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{delMin}\PYG{p}{();}
+\PYG{+w}{      }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{sort}\PYG{p}{();}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{};}
+\end{Verbatim}

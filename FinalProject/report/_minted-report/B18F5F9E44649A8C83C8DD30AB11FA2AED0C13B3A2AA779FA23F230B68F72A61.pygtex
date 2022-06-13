@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{+w}{  }\PYG{c+cm}{/* include/types.h */}
+\PYG{+w}{  }\PYG{k}{using}\PYG{+w}{ }\PYG{n}{vertice\PYGZus{}type}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{string}\PYG{p}{;}
+\PYG{+w}{  }\PYG{k}{using}\PYG{+w}{ }\PYG{n}{edge\PYGZus{}type}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{n}{vertice\PYGZus{}type}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{vertice\PYGZus{}type}\PYG{o}{\PYGZgt{}}\PYG{p}{;}
+\PYG{+w}{  }\PYG{k}{using}\PYG{+w}{ }\PYG{n}{weighted\PYGZus{}edge\PYGZus{}type}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{std}\PYG{o}{::}\PYG{n}{pair}\PYG{o}{\PYGZlt{}}\PYG{n}{edge\PYGZus{}type}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{o}{\PYGZgt{}}\PYG{p}{;}
+\end{Verbatim}

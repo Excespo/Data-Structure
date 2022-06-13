@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/test_edges.dir/tests/test_edges.cc.o CMakeFiles/test_edges.dir/src/adjacency.cc.o CMakeFiles/test_edges.dir/src/edges.cc.o -o test_edges 

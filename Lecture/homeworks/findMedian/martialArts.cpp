@@ -115,7 +115,7 @@ int main() {
 
     // sort(names1.begin(), names1.end(), MartialArtsCompare::lt); disp<std::string>(names1);
     quick_sort_martialArts(names1); disp<std::string>(names1);
-    stable_sort(names2.begin(), names2.end(), MartialArtsCompare::lt); disp<std::string>(names2);
+    // stable_sort(names2.begin(), names2.end(), MartialArtsCompare::lt); disp<std::string>(names2);
     merge_sort_martialArts(names2); disp<std::string>(names2);
 
     return 0;

@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{+w}{  }\PYG{c+cm}{/* include/adjacency.h */}
+\PYG{+w}{  }\PYG{n}{AdjacencyMatrix}\PYG{p}{(}\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{vertice\PYGZus{}type}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{vs}\PYG{p}{,}
+\PYG{+w}{                  }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{weighted\PYGZus{}edge\PYGZus{}type}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{wes}\PYG{p}{);}
+\PYG{+w}{  }\PYG{o}{\PYGZti{}}\PYG{n}{AdjacencyMatrix}\PYG{p}{()\PYGZob{}\PYGZcb{};}
+\PYG{+w}{  }\PYG{n}{std}\PYG{o}{::}\PYG{n}{vector}\PYG{o}{\PYGZlt{}}\PYG{n}{vertice\PYGZus{}type}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{get\PYGZus{}vertices}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{\PYGZus{}vertices}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{n}{vertice\PYGZus{}to\PYGZus{}idx\PYGZus{}map\PYGZus{}type}\PYG{+w}{ }\PYG{n}{get\PYGZus{}v2idx}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{\PYGZus{}v2idx}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{n}{idx\PYGZus{}to\PYGZus{}vertice\PYGZus{}map\PYGZus{}type}\PYG{+w}{ }\PYG{n}{get\PYGZus{}idx2v}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{\PYGZus{}idx2v}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{n}{adj\PYGZus{}matrix\PYGZus{}type}\PYG{+w}{ }\PYG{n}{get\PYGZus{}adjMat}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{\PYGZus{}adjMat}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{get\PYGZus{}v\PYGZus{}size}\PYG{p}{(}\PYG{k+kt}{void}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{\PYGZus{}v\PYGZus{}size}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{get\PYGZus{}e\PYGZus{}size}\PYG{p}{(}\PYG{k+kt}{void}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{\PYGZus{}e\PYGZus{}size}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n}{print}\PYG{p}{();}
+\end{Verbatim}
